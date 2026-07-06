@@ -2,10 +2,24 @@
 <html>
 <head>
     <title>Bill - SYS STORE</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="bill.css">
+    <style>
+        /* Optional: Basic styling for the new Clear Cart button to match your layout */
+        .clear-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 10px;
+        }
+        .clear-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,48 +33,66 @@
         <hr>
 
         <table>
-
-            <tr>
-                <th>Item</th>
-                <th>Qty</th>
-                <th>Amount</th>
-            </tr>
-
-            <tr>
-                <td>Onion</td>
-                <td>2 Kg</td>
-                <td>₹80</td>
-            </tr>
-
-            <tr>
-                <td>Apple</td>
-                <td>1 Kg</td>
-                <td>₹120</td>
-            </tr>
-
-            <tr>
-                <td>Sprite</td>
-                <td>2</td>
-                <td>₹80</td>
-            </tr>
-
+            <thead>
+                <tr>
+                    <th style="text-align: left;">Item</th>
+                    <th style="text-align: right;">Amount</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <!-- JavaScript will automatically inject the cart items here -->
+            </tbody>
         </table>
 
         <hr>
 
-        <div class="total">
-            Grand Total : ₹280
+        <div class="total" id="grand-total" style="text-align: right; font-weight: bold; font-size: 1.2em;">
+            Grand Total : ₹0
         </div>
 
-        <button onclick="window.print()">
-            🖨 Print Bill
-        </button>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+            <button onclick="window.print()" style="padding: 10px 15px; font-family: 'Poppins', sans-serif; cursor: pointer;">
+                🖨 Print Bill
+            </button>
+            
+            <button onclick="clearCart()" class="clear-btn">
+                🗑 Clear Cart
+            </button>
+        </div>
 
-        <p class="thankyou">
+        <p class="thankyou" style="text-align: center; margin-top: 20px;">
             Thank You For Shopping With Us ❤️
         </p>
 
     </div>
+
+    <script>
+        // Load the cart from local storage
+        const cart = JSON.parse(localStorage.getItem('sysStoreCart')) || [];
+        const container = document.getElementById('cart-items');
+        const totalDisplay = document.getElementById('grand-total');
+        let total = 0;
+
+        // Loop through each item in the cart and display it
+        cart.forEach(item => {
+            let row = `<tr>
+                <td style="text-align: left;">${item.name}</td>
+                <td style="text-align: right;">₹${item.price}</td>
+            </tr>`;
+            container.innerHTML += row;
+            total += parseInt(item.price);
+        });
+
+        // Display the final calculated total
+        totalDisplay.innerText = `Grand Total : ₹${total}`;
+
+        // Function to clear the cart after printing/shopping
+        function clearCart() {
+            localStorage.removeItem('sysStoreCart');
+            alert("Cart cleared!");
+            location.reload(); // Refresh the page to show an empty bill
+        }
+    </script>
 
 </body>
 </html>
