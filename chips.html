@@ -9,8 +9,6 @@
 
 <body>
 
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
     <header>
         <h1>🥔 CHIPS</h1>
         <p>Fresh Crunchy Chips</p>
@@ -22,52 +20,36 @@
             <img src="images/cream.jpg" alt="Cream n Onion">
             <h3>Cream n Onion</h3>
             <p>₹40 / packet</p>
-
-            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🥔 Cream n Onion Chips added!')">
-                <input type="hidden" name="action" value="add">
-                <input type="hidden" name="itemName" value="Cream n Onion">
-                <input type="number" name="quantity" placeholder="Quantity" min="1" value="1">
-                <button type="submit">Add To Cart</button>
-            </form>
+            <input type="number" id="qty-cream" placeholder="Quantity" min="1" value="1">
+            <br>
+            <button onclick="addToCart('Cream n Onion', 40, 'qty-cream', '🥔 Cream n Onion Chips added!')">Add To Cart</button>
         </div>
 
         <div class="product-card">
             <img src="images/tochip.jpg" alt="Tomato">
             <h3>Tomato</h3>
             <p>₹35 / packet</p>
-
-            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🍅 Tomato Chips added!')">
-                <input type="hidden" name="action" value="add">
-                <input type="hidden" name="itemName" value="Tomato Chips">
-                <input type="number" name="quantity" placeholder="Quantity" min="1" value="1">
-                <button type="submit">Add To Cart</button>
-            </form>
+            <input type="number" id="qty-tomato-chip" placeholder="Quantity" min="1" value="1">
+            <br>
+            <button onclick="addToCart('Tomato Chips', 35, 'qty-tomato-chip', '🍅 Tomato Chips added!')">Add To Cart</button>
         </div>
 
         <div class="product-card">
             <img src="images/chipes.jpg" alt="Salted">
             <h3>Salted</h3>
             <p>₹30 / packet</p>
-
-            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🧂 Salted Chips added!')">
-                <input type="hidden" name="action" value="add">
-                <input type="hidden" name="itemName" value="Salted Chips">
-                <input type="number" name="quantity" placeholder="Quantity" min="1" value="1">
-                <button type="submit">Add To Cart</button>
-            </form>
+            <input type="number" id="qty-salted" placeholder="Quantity" min="1" value="1">
+            <br>
+            <button onclick="addToCart('Salted Chips', 30, 'qty-salted', '🧂 Salted Chips added!')">Add To Cart</button>
         </div>
 
         <div class="product-card">
             <img src="images/paprika.jpg" alt="Paprika">
             <h3>Paprika</h3>
             <p>₹50 / packet</p>
-
-            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🌶️ Paprika Chips added!')">
-                <input type="hidden" name="action" value="add">
-                <input type="hidden" name="itemName" value="Paprika Chips">
-                <input type="number" name="quantity" placeholder="Quantity" min="1" value="1">
-                <button type="submit">Add To Cart</button>
-            </form>
+            <input type="number" id="qty-paprika" placeholder="Quantity" min="1" value="1">
+            <br>
+            <button onclick="addToCart('Paprika Chips', 50, 'qty-paprika', '🌶️ Paprika Chips added!')">Add To Cart</button>
         </div>
 
     </div>
@@ -76,7 +58,7 @@
 
     <div style="position: fixed; bottom: 0; left: 0; width: 100%; background: #ffb300; display: flex; justify-content: space-around; padding: 15px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index: 999;">
         <a href="index.html" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🏠 Store Home</a>
-        <a href="cart.jsp" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🛒 View My Cart</a>
+        <a href="cart.html" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🛒 View My Cart</a>
     </div>
 
     <script>
@@ -87,6 +69,18 @@
         setTimeout(function() {
             toast.style.display = "none";
         }, 2500);
+    }
+
+    function addToCart(itemName, pricePerUnit, inputId, toastMessage) {
+        let qty = document.getElementById(inputId).value;
+        let finalPrice = pricePerUnit * qty;
+        let displayName = `${itemName} (${qty}x)`;
+
+        let cart = JSON.parse(localStorage.getItem('sysStoreCart')) || [];
+        cart.push({ name: displayName, price: finalPrice });
+        localStorage.setItem('sysStoreCart', JSON.stringify(cart));
+
+        showToast(toastMessage);
     }
     </script>
 
