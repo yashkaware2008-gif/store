@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Vegetables - SYS STORE</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="vegetables.css">
 </head>
 
@@ -15,57 +14,75 @@
         <p>Fresh vegetables at best prices</p>
     </header>
 
-    <div class="products">
+    <div class="products" style="margin-bottom: 80px;">
 
         <div class="product-card">
             <img src="images/onion.jpg" alt="Onion">
             <h3>Onion</h3>
             <p>₹40 / kg</p>
-
-            <input type="number"
-                   placeholder="Enter Kg"
-                   min="1">
-
-            <button>Add To Cart</button>
+            <input type="number" id="qty-onion" placeholder="Enter Kg" min="1" value="1">
+            <br>
+            <button onclick="addToCart('Onion', 40, 'qty-onion', '🧅 Onion added to cart!')">Add To Cart</button>
         </div>
 
         <div class="product-card">
             <img src="images/tomato.jpg" alt="Tomato">
             <h3>Tomato</h3>
             <p>₹35 / kg</p>
-
-            <input type="number"
-                   placeholder="Enter Kg"
-                   min="1">
-
-            <button>Add To Cart</button>
+            <input type="number" id="qty-tomato-veg" placeholder="Enter Kg" min="1" value="1">
+            <br>
+            <button onclick="addToCart('Tomato', 35, 'qty-tomato-veg', '🍅 Tomato added to cart!')">Add To Cart</button>
         </div>
 
         <div class="product-card">
             <img src="images/potato.jpg" alt="Potato">
             <h3>Potato</h3>
             <p>₹30 / kg</p>
-
-            <input type="number"
-                   placeholder="Enter Kg"
-                   min="1">
-
-            <button>Add To Cart</button>
+            <input type="number" id="qty-potato" placeholder="Enter Kg" min="1" value="1">
+            <br>
+            <button onclick="addToCart('Potato', 30, 'qty-potato', '🥔 Potato added to cart!')">Add To Cart</button>
         </div>
 
         <div class="product-card">
             <img src="images/carrot.jpg" alt="Carrot">
             <h3>Carrot</h3>
             <p>₹50 / kg</p>
-
-            <input type="number"
-                   placeholder="Enter Kg"
-                   min="1">
-
-            <button>Add To Cart</button>
+            <input type="number" id="qty-carrot" placeholder="Enter Kg" min="1" value="1">
+            <br>
+            <button onclick="addToCart('Carrot', 50, 'qty-carrot', '🥕 Carrot added to cart!')">Add To Cart</button>
         </div>
 
     </div>
+
+    <div id="toast" style="display: none; position: fixed; top: 30px; right: 30px; background: #ff9800; color: white; padding: 15px 30px; border-radius: 15px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; font-family: 'Poppins', sans-serif; font-size: 16px;"></div>
+
+    <div style="position: fixed; bottom: 0; left: 0; width: 100%; background: #ffb300; display: flex; justify-content: space-around; padding: 15px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index: 999;">
+        <a href="index.html" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🏠 Store Home</a>
+        <a href="cart.html" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🛒 View My Cart</a>
+    </div>
+
+    <script>
+    function showToast(message) {
+        var toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.style.display = "block";
+        setTimeout(function() {
+            toast.style.display = "none";
+        }, 2500);
+    }
+
+    function addToCart(itemName, pricePerUnit, inputId, toastMessage) {
+        let qty = document.getElementById(inputId).value;
+        let finalPrice = pricePerUnit * qty;
+        let displayName = `${itemName} (${qty}x)`;
+
+        let cart = JSON.parse(localStorage.getItem('sysStoreCart')) || [];
+        cart.push({ name: displayName, price: finalPrice });
+        localStorage.setItem('sysStoreCart', JSON.stringify(cart));
+
+        showToast(toastMessage);
+    }
+    </script>
 
 </body>
 </html>
