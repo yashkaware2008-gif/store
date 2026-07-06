@@ -9,8 +9,6 @@
 
 <body>
 
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
     <header>
         <h1>🍎 FRUITS</h1>
         <p>Fresh fruits at best prices</p>
@@ -22,52 +20,40 @@
             <img src="images/apple.jpg" alt="Apple">
             <h3>Apple</h3>
             <p>₹120 / kg</p>
-
-            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🍎 Apple added to cart!')">
-                <input type="hidden" name="action" value="add">
-                <input type="hidden" name="itemName" value="Apple">
-                <input type="number" name="quantity" placeholder="Enter Kg" min="1" value="1">
-                <button type="submit">Add To Cart</button>
-            </form>
+            
+            <input type="number" id="qty-apple" placeholder="Enter Kg" min="1" value="1" style="width: 80px; margin-bottom: 10px; padding: 5px;">
+            <br>
+            <button onclick="addToCart('Apple', 120, 'qty-apple', '🍎 Apple added to cart!')">Add To Cart</button>
         </div>
 
         <div class="product-card">
             <img src="images/banana.jpg" alt="Banana">
             <h3>Banana</h3>
             <p>₹70 / dozen</p>
-
-            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🍌 Banana added to cart!')">
-                <input type="hidden" name="action" value="add">
-                <input type="hidden" name="itemName" value="Banana">
-                <input type="number" name="quantity" placeholder="Dozen" min="1" value="1">
-                <button type="submit">Add To Cart</button>
-            </form>
+            
+            <input type="number" id="qty-banana" placeholder="Dozen" min="1" value="1" style="width: 80px; margin-bottom: 10px; padding: 5px;">
+            <br>
+            <button onclick="addToCart('Banana', 70, 'qty-banana', '🍌 Banana added to cart!')">Add To Cart</button>
         </div>
 
         <div class="product-card">
             <img src="images/litchi.jpg" alt="Lychee">
             <h3>Lychee</h3>
             <p>₹150 / kg</p>
-
-            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🍒 Lychee added to cart!')">
-                <input type="hidden" name="action" value="add">
-                <input type="hidden" name="itemName" value="Lychee">
-                <input type="number" name="quantity" placeholder="Enter Kg" min="1" value="1">
-                <button type="submit">Add To Cart</button>
-            </form>
+            
+            <input type="number" id="qty-lychee" placeholder="Enter Kg" min="1" value="1" style="width: 80px; margin-bottom: 10px; padding: 5px;">
+            <br>
+            <button onclick="addToCart('Lychee', 150, 'qty-lychee', '🍒 Lychee added to cart!')">Add To Cart</button>
         </div>
 
         <div class="product-card">
             <img src="images/orange.jpg" alt="Orange">
             <h3>Orange</h3>
             <p>₹80 / kg</p>
-
-            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🍊 Orange added to cart!')">
-                <input type="hidden" name="action" value="add">
-                <input type="hidden" name="itemName" value="Orange">
-                <input type="number" name="quantity" placeholder="Enter Kg" min="1" value="1">
-                <button type="submit">Add To Cart</button>
-            </form>
+            
+            <input type="number" id="qty-orange" placeholder="Enter Kg" min="1" value="1" style="width: 80px; margin-bottom: 10px; padding: 5px;">
+            <br>
+            <button onclick="addToCart('Orange', 80, 'qty-orange', '🍊 Orange added to cart!')">Add To Cart</button>
         </div>
 
     </div>
@@ -76,10 +62,11 @@
 
     <div style="position: fixed; bottom: 0; left: 0; width: 100%; background: #ffb300; display: flex; justify-content: space-around; padding: 15px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index: 999;">
         <a href="index.html" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🏠 Store Home</a>
-        <a href="cart.html" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🛒 View My Cart</a>
+        <a href="bill.html" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🧾 View My Bill</a>
     </div>
 
     <script>
+    // 1. Function to show the popup notification
     function showToast(message) {
         var toast = document.getElementById("toast");
         toast.innerText = message;
@@ -87,6 +74,30 @@
         setTimeout(function() {
             toast.style.display = "none";
         }, 2500);
+    }
+
+    // 2. Function to add items to the localStorage Cart
+    function addToCart(itemName, pricePerUnit, inputId, toastMessage) {
+        // Get the quantity the user typed in
+        let qty = document.getElementById(inputId).value;
+        
+        // Calculate total price (e.g., 2 kg of Apple = 2 * 120 = 240)
+        let finalPrice = pricePerUnit * qty;
+        
+        // Make a display name that shows the quantity (e.g., "Apple (2x)")
+        let displayName = `${itemName} (${qty}x)`;
+
+        // Get existing cart, or start a new one
+        let cart = JSON.parse(localStorage.getItem('sysStoreCart')) || [];
+        
+        // Add this new item to the cart
+        cart.push({ name: displayName, price: finalPrice });
+        
+        // Save it back to browser memory
+        localStorage.setItem('sysStoreCart', JSON.stringify(cart));
+
+        // Show the success toast!
+        showToast(toastMessage);
     }
     </script>
 
