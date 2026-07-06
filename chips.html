@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chips - SYS STORE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="chips.css">
+</head>
+
+<body>
+
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+    <header>
+        <h1>🥔 CHIPS</h1>
+        <p>Fresh Crunchy Chips</p>
+    </header>
+
+    <div class="products" style="margin-bottom: 80px;">
+
+        <div class="product-card">
+            <img src="images/cream.jpg" alt="Cream n Onion">
+            <h3>Cream n Onion</h3>
+            <p>₹40 / packet</p>
+
+            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🥔 Cream n Onion Chips added!')">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="itemName" value="Cream n Onion">
+                <input type="number" name="quantity" placeholder="Quantity" min="1" value="1">
+                <button type="submit">Add To Cart</button>
+            </form>
+        </div>
+
+        <div class="product-card">
+            <img src="images/tochip.jpg" alt="Tomato">
+            <h3>Tomato</h3>
+            <p>₹35 / packet</p>
+
+            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🍅 Tomato Chips added!')">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="itemName" value="Tomato Chips">
+                <input type="number" name="quantity" placeholder="Quantity" min="1" value="1">
+                <button type="submit">Add To Cart</button>
+            </form>
+        </div>
+
+        <div class="product-card">
+            <img src="images/chipes.jpg" alt="Salted">
+            <h3>Salted</h3>
+            <p>₹30 / packet</p>
+
+            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🧂 Salted Chips added!')">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="itemName" value="Salted Chips">
+                <input type="number" name="quantity" placeholder="Quantity" min="1" value="1">
+                <button type="submit">Add To Cart</button>
+            </form>
+        </div>
+
+        <div class="product-card">
+            <img src="images/paprika.jpg" alt="Paprika">
+            <h3>Paprika</h3>
+            <p>₹50 / packet</p>
+
+            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🌶️ Paprika Chips added!')">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="itemName" value="Paprika Chips">
+                <input type="number" name="quantity" placeholder="Quantity" min="1" value="1">
+                <button type="submit">Add To Cart</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div id="toast" style="display: none; position: fixed; top: 30px; right: 30px; background: #ff9800; color: white; padding: 15px 30px; border-radius: 15px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; font-family: 'Poppins', sans-serif; font-size: 16px;"></div>
+
+    <div style="position: fixed; bottom: 0; left: 0; width: 100%; background: #ffb300; display: flex; justify-content: space-around; padding: 15px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index: 999;">
+        <a href="index.html" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🏠 Store Home</a>
+        <a href="cart.jsp" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🛒 View My Cart</a>
+    </div>
+
+    <script>
+    function showToast(message) {
+        var toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.style.display = "block";
+        setTimeout(function() {
+            toast.style.display = "none";
+        }, 2500);
+    }
+    </script>
+
+</body>
+</html>

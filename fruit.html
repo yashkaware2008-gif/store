@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fruits - SYS STORE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fruit.css">
+</head>
+
+<body>
+
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+    <header>
+        <h1>🍎 FRUITS</h1>
+        <p>Fresh fruits at best prices</p>
+    </header>
+
+    <div class="products" style="margin-bottom: 80px;">
+
+        <div class="product-card">
+            <img src="images/apple.jpg" alt="Apple">
+            <h3>Apple</h3>
+            <p>₹120 / kg</p>
+
+            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🍎 Apple added to cart!')">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="itemName" value="Apple">
+                <input type="number" name="quantity" placeholder="Enter Kg" min="1" value="1">
+                <button type="submit">Add To Cart</button>
+            </form>
+        </div>
+
+        <div class="product-card">
+            <img src="images/banana.jpg" alt="Banana">
+            <h3>Banana</h3>
+            <p>₹70 / dozen</p>
+
+            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🍌 Banana added to cart!')">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="itemName" value="Banana">
+                <input type="number" name="quantity" placeholder="Dozen" min="1" value="1">
+                <button type="submit">Add To Cart</button>
+            </form>
+        </div>
+
+        <div class="product-card">
+            <img src="images/litchi.jpg" alt="Lychee">
+            <h3>Lychee</h3>
+            <p>₹150 / kg</p>
+
+            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🍒 Lychee added to cart!')">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="itemName" value="Lychee">
+                <input type="number" name="quantity" placeholder="Enter Kg" min="1" value="1">
+                <button type="submit">Add To Cart</button>
+            </form>
+        </div>
+
+        <div class="product-card">
+            <img src="images/orange.jpg" alt="Orange">
+            <h3>Orange</h3>
+            <p>₹80 / kg</p>
+
+            <form action="cart-actions" method="POST" target="hidden_iframe" onsubmit="showToast('🍊 Orange added to cart!')">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="itemName" value="Orange">
+                <input type="number" name="quantity" placeholder="Enter Kg" min="1" value="1">
+                <button type="submit">Add To Cart</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div id="toast" style="display: none; position: fixed; top: 30px; right: 30px; background: #ff9800; color: white; padding: 15px 30px; border-radius: 15px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; font-family: 'Poppins', sans-serif; font-size: 16px;"></div>
+
+    <div style="position: fixed; bottom: 0; left: 0; width: 100%; background: #ffb300; display: flex; justify-content: space-around; padding: 15px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index: 999;">
+        <a href="index.html" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🏠 Store Home</a>
+        <a href="cart.jsp" style="text-decoration: none; color: black; font-weight: bold; font-family: 'Poppins';">🛒 View My Cart</a>
+    </div>
+
+    <script>
+    function showToast(message) {
+        var toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.style.display = "block";
+        setTimeout(function() {
+            toast.style.display = "none";
+        }, 2500);
+    }
+    </script>
+
+</body>
+</html>
