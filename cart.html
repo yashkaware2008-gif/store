@@ -2,9 +2,7 @@
 <html>
 <head>
     <title>Cart - SYS STORE</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="cart.css">
 </head>
 
@@ -16,45 +14,75 @@
     </header>
 
     <div class="cart-container">
-        <h2>Items in Cart: 3</h2>
+        <h2 id="cart-count">Items in Cart: 0</h2>
 
         <table>
-
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-            </tr>
-
-            <tr>
-                <td>Onion</td>
-                <td>2 Kg</td>
-                <td>₹80</td>
-            </tr>
-
-            <tr>
-                <td>Apple</td>
-                <td>1 Kg</td>
-                <td>₹120</td>
-            </tr>
-
-            <tr>
-                <td>Sprite</td>
-                <td>2</td>
-                <td>₹80</td>
-            </tr>
-
+            <thead>
+                <tr>
+                    <th style="text-align: left;">Product</th>
+                    <th style="text-align: right;">Price</th>
+                </tr>
+            </thead>
+            <tbody id="cart-table-body">
+                </tbody>
         </table>
 
-        <div class="total-box">
-            Total Amount: ₹280
+        <div class="total-box" id="cart-total" style="font-weight: bold; font-size: 1.2em; margin: 20px 0;">
+            Total Amount: ₹0
         </div>
 
-       <button class="bill-btn">
-    🧾 Generate Bill
-</button>
+        <button class="bill-btn" onclick="window.location.href='bill.html'" style="cursor: pointer; padding: 10px 20px; font-family: 'Poppins', sans-serif;">
+            🧾 Generate Bill
+        </button>
+        
+        <button onclick="window.location.href='index.html'" style="cursor: pointer; padding: 10px 20px; font-family: 'Poppins', sans-serif; background: #ddd; border: none; border-radius: 5px; margin-left: 10px;">
+            🏠 Continue Shopping
+        </button>
     </div>
     
+    <script>
+        // 1. Load the cart from local storage
+        let cart = JSON.parse(localStorage.getItem('sysStoreCart')) || [];
+        
+        // 2. Get the HTML elements where we will inject data
+        const tableBody = document.getElementById('cart-table-body');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotal = document.getElementById('cart-total');
+        
+        let total = 0;
+
+        // 3. Update the header text to show how many items are in the cart
+        cartCount.innerText = `Items in Cart: ${cart.length}`;
+
+        // 4. Fill the table with items
+        if(cart.length === 0) {
+            // Show this if the cart is empty
+            tableBody.innerHTML = '<tr><td colspan="2" style="text-align:center; padding: 20px;">Your cart is empty!</td></tr>';
+        } else {
+            // Loop through the cart array and build table rows
+            cart.forEach((item, index) => {
+                let row = `<tr>
+                    <td style="text-align: left;">${item.name}</td>
+                    <td style="text-align: right;">
+                        ₹${item.price} 
+                        <button onclick="removeItem(${index})" style="margin-left:10px; color:red; border:none; background:none; cursor:pointer; font-size: 16px;" title="Remove Item">❌</button>
+                    </td>
+                </tr>`;
+                tableBody.innerHTML += row;
+                total += parseInt(item.price);
+            });
+        }
+
+        // 5. Update the grand total box
+        cartTotal.innerText = `Total Amount: ₹${total}`;
+
+        // 6. Bonus Feature: Function to remove a single item from the cart
+        function removeItem(index) {
+            cart.splice(index, 1); // Remove the specific item from the array
+            localStorage.setItem('sysStoreCart', JSON.stringify(cart)); // Save the updated array back to storage
+            location.reload(); // Refresh the page to show the updated cart
+        }
+    </script>
 
 </body>
 </html>
